@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Chatify!</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script src="/nowjs/now.js"></script>
+
+<script>
+$(document).ready(function(){
+
+  now.receiveMessage = function(name, message){
+    $("#messages").append("<br>" + name + ": " + message);
+  }
+  
+  now.updateUserList = function(name) {
+	 // $.each(names, function(key, value) { 
+		  $("#users").append("<span id='"+name+"'><br>" + name + "</span>");
+	//	});
+  }
+  
+  now.removeUser = function(name){
+	  $("#"+name).remove();
+  }
+
+  $("#send-button").click(function(){
+    now.distributeMessage($("#text-input").val());
+    $("#text-input").val("");
+  });
+  
+	$('#text-input').bind('keypress', function(e) {
+		if(e.keyCode==13){
+			now.distributeMessage($("#text-input").val());
+			$("#text-input").val("");
+				// Enter pressed... do anything here...
+		}
+	});
+
+  now.name = prompt("What's your name?", "");
+
+});
+</script>
+</head>
+
+<body>
+  <div id="messages"></div>
+  <input type="text" id="text-input">
+  <input type="button" value="Send" id="send-button">
+  
+  <div id="users"></div>
+</body>
+</html>
