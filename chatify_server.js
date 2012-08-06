@@ -2,7 +2,7 @@ var html = require('fs').readFileSync(__dirname+'/chatify.html');
 var server = require('http').createServer(function(req, res){
   res.end(html);
 });
-server.listen(8080);
+server.listen(80);
 
 var nowjs = require("now");
 var everyone = nowjs.initialize(server);
