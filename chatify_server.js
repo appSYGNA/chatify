@@ -1,4 +1,4 @@
-var html = require('fs').readFileSync(__dirname+'/helloworld.html');
+var html = require('fs').readFileSync(__dirname+'/chatify.html');
 var server = require('http').createServer(function(req, res){
   res.end(html);
 });
