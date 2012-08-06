@@ -9,11 +9,13 @@ var everyone = nowjs.initialize(server);
 
 var names = []; //Active users
 var log = []; //Chat history
+//Keep 50 lines of chat
 
 everyone.now.distributeMessage = function(message){
 	var date = curDate();
 	var data = {"date":date, "name":this.now.name, "message":message};
 	log.push(data); //Add to history
+	if(log.length > 50) log.splice(0, 1); //Ensure that there are only 50 lines kept in the history
 	everyone.now.receiveMessage(this.now.name, date, message);
 };
 
