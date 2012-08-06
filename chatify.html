@@ -12,6 +12,12 @@ $(document).ready(function(){
     $("#messages").append("<br>" + date + " " + name + ": " + message);
   }
   
+  now.receiveHistory = function(history){
+  	$.each(history, function(key,value){
+		$("#messages").append("<br>" + value["date"] + " " + value["name"] + ": " + value["message"]);
+  	});
+  }
+  
   now.updateUserList = function(name) {
 	 // $.each(names, function(key, value) { 
 		  $("#users").append("<span id='"+name+"'><br>" + name + "</span>");

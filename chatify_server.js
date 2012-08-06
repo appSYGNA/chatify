@@ -11,16 +11,22 @@ var names = []; //Active users
 var log = []; //Chat history
 
 everyone.now.distributeMessage = function(message){
-
-	everyone.now.receiveMessage(this.now.name, curDate(), message);
+	var date = curDate();
+	var data = {"date":date, "name":this.now.name, "message":message};
+	log.push(data); //Add to history
+	everyone.now.receiveMessage(this.now.name, date, message);
 };
 
 nowjs.on('connect', function(){
+	//Update user list
 	everyone.now.updateUserList(this.now.name);
 	for (var i = 0; i < names.length; i++) {
 		this.now.updateUserList(names[i]);
 	}
 	names.push(this.now.name);
+	
+	//Send user some chat history
+	this.now.receiveHistory(log);
 });
  
 nowjs.on('disconnect', function(){
