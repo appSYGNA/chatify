@@ -53,12 +53,9 @@ nowjs.on('connect', function(){
 
 	group.now.announceUser(newName, date);
 	group.addUser(this.user.clientId);
-	//everyone.now.updateUserList(newName);
-	//for (var i = 0; i < names.length; i++) {
-		this.now.listAllUsers(names);
-	//}
-	
+
 	names.push(newName);
+	this.now.listAllUsers(names);
 	
 	//Send user some chat history
 	this.now.receiveHistory(log);

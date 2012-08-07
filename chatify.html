@@ -30,13 +30,12 @@ $(document).ready(function(){
 		}
   	});
   	$("#messages").append("<br>" + "<font color='#00FF00'>You have joined the chat.</font>");
-    now.updateUserList(now.name);
   	$('#messages').scrollTop(200);
   }
   
   now.listAllUsers = function(names) {
   	for (var i = 0; i < names.length; i++) {
-  		if(names[i]!=now.name) now.updateUserList(names[i]);
+  		now.updateUserList(names[i]);
   	}
   }
   
