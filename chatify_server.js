@@ -51,10 +51,10 @@ function curDate(){
 		morn = "PM";
 		hours-=12;
 	}
-	var mins = d.getMinutes();
+	var mins = ""+d.getMinutes();
 	if(mins.length==1) mins = "0"+mins;
 	
-	var secs = d.getSeconds();
+	var secs = ""+d.getSeconds();
 	if(secs.length==1) secs = "0"+secs;
 	
 	var dStr = hours + ":" + mins + ":"+ secs + " " + morn;
