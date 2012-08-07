@@ -1,5 +1,11 @@
 var html = require('fs').readFileSync(__dirname+'/chatify.html');
+var url = require('url');
 var server = require('http').createServer(function(req, res){
+/*if(req.method=='GET') {
+	var url_parts = url.parse(req.url,true);
+	//everyone.now.receiveMessage("Server", curDate(), url_parts.query);
+	console.log(url_parts.query);
+}*/
   res.end(html);
 });
 server.listen(80);
