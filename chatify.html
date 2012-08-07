@@ -10,12 +10,14 @@ $(document).ready(function(){
 
   now.receiveMessage = function(name, date, message){
     $("#messages").append("<br>" + date + " " + name + ": " + message);
+    $('#messages').scrollTop(200);
   }
   
   now.receiveHistory = function(history){
   	$.each(history, function(key,value){
 		$("#messages").append("<br>" + value["date"] + " " + value["name"] + ": " + value["message"]);
   	});
+  	$('#messages').scrollTop(200);
   }
   
   now.updateUserList = function(name) {
@@ -66,10 +68,13 @@ function getUrlVars()
 </head>
 
 <body>
-  <div id="messages"></div>
-  <input type="text" id="text-input">
+	<table border=1px style="width:500px; max-height:50px;">
+		<tr>
+			<td style="width:80%; "><div id="messages" style="max-height:200px; min-height:200px; max-width:400px; overflow:auto; overflow-x:hidden;"></div></td>
+			<td style="width:20%;"><div id="users" style="max-height:200px; min-height:200px; max-width:100px; overflow:auto; overflow-x:hidden;"></div></td>
+		</tr>
+	</table>
+  <input type="text" id="text-input" style="width:300px;">
   <input type="button" value="Send" id="send-button">
-  
-  <div id="users"></div>
 </body>
 </html>
