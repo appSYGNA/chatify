@@ -33,7 +33,10 @@ everyone.now.distributeMessage = function(message){
 nowjs.on('connect', function(){
 	//Update user list
 	var newName = this.now.name;
-	if(newName=="" || newName==null) newName="Guest";
+	if(newName=="" || newName==null) {
+		newName="Guest";
+		this.now.name="Guest";
+	} 
 	if(!(this.now.group in groups)) groups[this.now.group] = {names:[], log:[], group: nowjs.getGroup(this.now.group+"")};
 	
 	var names = groups[this.now.group].names;
