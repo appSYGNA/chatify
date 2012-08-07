@@ -48,6 +48,7 @@ nowjs.on('connect', function(){
 		num++;
 	}
 	this.now.name = newName;
+	this.now.changeName(newName);
 	
 	var date=curDate();
 

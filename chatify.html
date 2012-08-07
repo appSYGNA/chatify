@@ -8,6 +8,17 @@
 <script>
 $(document).ready(function(){
 
+	get = getUrlVars();
+	if(get["name"]!=null) now.name = get["name"];
+	else now.name = prompt("What's your name?", "");
+
+	if(get["group"]!=null) now.group = get["group"];
+	else now.group = 0;
+		
+	if(now.group>2)
+		$("#logo").attr('src', "https://s3.amazonaws.com/nocsavedlogos/"+now.group+".png");
+	else $("#logo").attr('src', "http://nocapp-dev.elasticbeanstalk.com/addons/shared_addons/themes/broadcasterwl/img/appsygna.png");
+
   now.receiveMessage = function(name, date, message){
   	if(name==now.name) color = "#0000FF";
   	else color = "#900000";
@@ -54,6 +65,10 @@ $(document).ready(function(){
 	  $("#messages").append("<br>" + date + " <font color='#900000'>"+name+" has left the chat.</font>");
 	  $('#messages').scrollTop(200);
   }
+  
+  now.changeName = function(name) {
+		now.name = name;
+  }
 
   $("#send-button").click(function(){
     sendMessage();
@@ -65,18 +80,7 @@ $(document).ready(function(){
 			sendMessage();
 		}
 	});
-
-	get = getUrlVars();
-	if(get["name"]!=null) now.name = get["name"];
-	else now.name = prompt("What's your name?", "");
-
-	if(get["group"]!=null) now.group = get["group"];
-	else now.group = 0;
-		
-	if(now.group>2)
-		$("#logo").attr('src', "https://s3.amazonaws.com/nocsavedlogos/"+now.group+".png");
-	else $("#logo").attr('src', "http://nocapp-dev.elasticbeanstalk.com/addons/shared_addons/themes/broadcasterwl/img/appsygna.png");
-
+	
 	sendMessage = function(){
 		now.distributeMessage($("#text-input").val());
 		$("#text-input").val("");
