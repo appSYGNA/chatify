@@ -9,13 +9,17 @@
 $(document).ready(function(){
 
   now.receiveMessage = function(name, date, message){
-    $("#messages").append("<br>" + date + " " + name + ": " + message);
+  	if(name==now.name) color = "#0000FF";
+  	else color = "#900000";
+    $("#messages").append("<br>" + date + " " + "<font color='"+color+"'>"+name + "</font>: " + message);
     $('#messages').scrollTop(200);
   }
   
   now.receiveHistory = function(history){
   	$.each(history, function(key,value){
-		$("#messages").append("<br>" + value["date"] + " " + value["name"] + ": " + value["message"]);
+  		if(value["name"]==now.name) color = "#0000FF";
+  		else color = "#900000";
+		$("#messages").append("<br>" + value["date"] + " <font color='"+color+"'>" + value["name"] + "</font>: " + value["message"]+"</font>");
   	});
   	$('#messages').scrollTop(200);
   }
