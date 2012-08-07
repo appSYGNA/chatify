@@ -57,6 +57,6 @@ function curDate(){
 	var secs = d.getSeconds();
 	if(secs.length==1) secs = "0"+secs;
 	
-	var dStr = hours + ":" + d.getMinutes() + ":"+d.getSeconds() + " " + morn;
+	var dStr = hours + ":" + mins + ":"+ secs + " " + morn;
 	return dStr;
 }
