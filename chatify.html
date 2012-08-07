@@ -61,6 +61,17 @@ $(document).ready(function(){
 		$("#text-input").val("");
 	}
 	
+	now.core.on('disconnect', function(){
+		$("#messages").append("<br>" + "<font color='#900000'>You have been disconnected.</font>");
+    	$('#messages').scrollTop(200);
+    	$("#users").empty();
+	});
+
+	now.core.on('connect', function(){
+		$("#messages").append("<br>" + "<font color='#00FF00'>You have joined the chat.</font>");
+    	$('#messages').scrollTop(200);
+	});
+	
 // Read a page's GET URL variables and return them as an associative array.
 function getUrlVars()
 {
