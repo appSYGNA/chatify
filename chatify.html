@@ -49,14 +49,13 @@ $(document).ready(function(){
 	if(get["name"]!=null) now.name = get["name"];
 	else now.name = prompt("What's your name?", "");
 
-	if(get["group"]!=null) {
-		 now.group = get["group"];
-		 $("#logo").attr('src', "https://s3.amazonaws.com/nocsavedlogos/"+now.group+".png");
-	}
-	else {
-		now.group = 0;
-		$("#logo").attr('src', "http://nocapp-dev.elasticbeanstalk.com/addons/shared_addons/themes/broadcasterwl/img/appsygna.png");
-	}
+	if(get["group"]!=null) now.group = get["group"];
+	else now.group = 0;
+		
+	if(now.group>2)
+		$("#logo").attr('src', "https://s3.amazonaws.com/nocsavedlogos/"+now.group+".png");
+	else $("#logo").attr('src', "http://nocapp-dev.elasticbeanstalk.com/addons/shared_addons/themes/broadcasterwl/img/appsygna.png");
+
 	sendMessage = function(){
 		now.distributeMessage($("#text-input").val());
 		$("#text-input").val("");
