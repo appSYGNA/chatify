@@ -27,11 +27,18 @@ everyone.now.distributeMessage = function(message){
 
 nowjs.on('connect', function(){
 	//Update user list
-	everyone.now.updateUserList(this.now.name);
+	var newName = this.now.name;
+	var num = 1;
+	while(names.indexOf(newName)!=-1) {
+		newName = this.now.name+num;
+		num++;
+	}
+	this.now.name = newName;
+	everyone.now.updateUserList(newName);
 	for (var i = 0; i < names.length; i++) {
 		this.now.updateUserList(names[i]);
 	}
-	names.push(this.now.name);
+	names.push(newName);
 	
 	//Send user some chat history
 	this.now.receiveHistory(log);
