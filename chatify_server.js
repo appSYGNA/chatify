@@ -13,31 +13,45 @@ server.listen(80);
 var nowjs = require("now");
 var everyone = nowjs.initialize(server);
 
-var names = []; //Active users
-var log = []; //Chat history
+var groups = {1:{names:[], log:[], group: nowjs.getGroup(1+"")}};
+//var names = []; //Active users
+//var log = []; //Chat history
 //Keep 50 lines of chat
 
 everyone.now.distributeMessage = function(message){
 	var date = curDate();
 	var data = {"date":date, "name":this.now.name, "message":message};
+	
+	var log = groups[this.now.group].log;
+	var group = groups[this.now.group].group;
 	log.push(data); //Add to history
 	if(log.length > 50) log.splice(0, 1); //Ensure that there are only 50 lines kept in the history
-	everyone.now.receiveMessage(this.now.name, date, message);
+	
+	group.now.receiveMessage(this.now.name, date, message);
 };
 
 nowjs.on('connect', function(){
 	//Update user list
 	var newName = this.now.name;
+	if(!(this.now.group in groups)) groups[this.now.group] = {names:[], log:[], group: nowjs.getGroup(this.now.group+"")};
+	
+	var names = groups[this.now.group].names;
+	var log = groups[this.now.group].log;
+	var group = groups[this.now.group].group;
 	var num = 1;
 	while(names.indexOf(newName)!=-1) {
 		newName = this.now.name+num;
 		num++;
 	}
 	this.now.name = newName;
-	everyone.now.updateUserList(newName);
+	group.addUser(this.user.clientId);
+	
+	group.now.updateUserList(newName);
+	//everyone.now.updateUserList(newName);
 	for (var i = 0; i < names.length; i++) {
 		this.now.updateUserList(names[i]);
 	}
+	
 	names.push(newName);
 	
 	//Send user some chat history
@@ -45,9 +59,9 @@ nowjs.on('connect', function(){
 });
  
 nowjs.on('disconnect', function(){
-	var index = names.indexOf(this.now.name);
-	names.splice(index, 1);
-	everyone.now.removeUser(this.now.name); 
+	var index = groups[this.now.group].names.indexOf(this.now.name);
+	groups[this.now.group].names.splice(index, 1);
+	groups[this.now.group].group.now.removeUser(this.now.name); 
 });
 
 function curDate(){

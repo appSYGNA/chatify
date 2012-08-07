@@ -49,6 +49,9 @@ $(document).ready(function(){
 	if(get["name"]!=null) now.name = get["name"];
 	else now.name = prompt("What's your name?", "");
 
+	if(get["group"]!=null) now.group = get["group"];
+	else now.group = 0;
+
 	sendMessage = function(){
 		now.distributeMessage($("#text-input").val());
 		$("#text-input").val("");
