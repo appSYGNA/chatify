@@ -17,21 +17,43 @@ $(document).ready(function(){
   
   now.receiveHistory = function(history){
   	$.each(history, function(key,value){
-  		if(value["name"]==now.name) color = "#0000FF";
-  		else color = "#900000";
-		$("#messages").append("<br>" + value["date"] + " <font color='"+color+"'>" + value["name"] + "</font>: " + value["message"]+"</font>");
+  		if(value["type"]=="msg") {
+	  		if(value["name"]==now.name) color = "#0000FF";
+	  		else color = "#900000";
+			$("#messages").append("<br>" + value["date"] + " <font color='"+color+"'>" + value["name"] + "</font>: " + value["message"]+"</font>");
+		}
+		else if(value["type"]=="connect") {
+			$("#messages").append("<br>" + value["date"] + " <font color='#00FF00'>"+value["name"]+" has joined the chat.</font>");
+		}
+		else if(value["type"]=="disconnect") {
+			$("#messages").append("<br>" + value["date"] + " <font color='#900000'>"+value["name"]+" has left the chat.</font>");
+		}
   	});
+  	$("#messages").append("<br>" + "<font color='#00FF00'>You have joined the chat.</font>");
+    now.updateUserList(now.name);
   	$('#messages').scrollTop(200);
   }
   
-  now.updateUserList = function(name) {
-	 // $.each(names, function(key, value) { 
-		  $("#users").append("<span id='"+name+"'><br>" + name + "</span>");
-	//	});
+  now.listAllUsers = function(names) {
+  	for (var i = 0; i < names.length; i++) {
+  		if(names[i]!=now.name) now.updateUserList(names[i]);
+  	}
   }
   
-  now.removeUser = function(name){
+  now.updateUserList = function(name) {
+		$("#users").append("<span id='"+name+"'><br>" + name + "</span>");
+  }
+  
+  now.announceUser = function(name, date) {
+  		now.updateUserList(name);
+		$("#messages").append("<br>" + date + " <font color='#00FF00'>"+name+" has joined the chat.</font>");
+	    $('#messages').scrollTop(200);
+  }
+  
+  now.removeUser = function(name, date){
 	  $("#"+name).remove();
+	  $("#messages").append("<br>" + date + " <font color='#900000'>"+name+" has left the chat.</font>");
+	  $('#messages').scrollTop(200);
   }
 
   $("#send-button").click(function(){
@@ -65,11 +87,6 @@ $(document).ready(function(){
 		$("#messages").append("<br>" + "<font color='#900000'>You have been disconnected.</font>");
     	$('#messages').scrollTop(200);
     	$("#users").empty();
-	});
-
-	now.core.on('connect', function(){
-		$("#messages").append("<br>" + "<font color='#00FF00'>You have joined the chat.</font>");
-    	$('#messages').scrollTop(200);
 	});
 	
 // Read a page's GET URL variables and return them as an associative array.

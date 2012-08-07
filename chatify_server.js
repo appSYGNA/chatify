@@ -20,7 +20,7 @@ var groups = {1:{names:[], log:[], group: nowjs.getGroup(1+"")}};
 
 everyone.now.distributeMessage = function(message){
 	var date = curDate();
-	var data = {"date":date, "name":this.now.name, "message":message};
+	var data = {"date":date, "name":this.now.name, "message":message, "type":"msg"};
 	
 	var log = groups[this.now.group].log;
 	var group = groups[this.now.group].group;
@@ -48,24 +48,33 @@ nowjs.on('connect', function(){
 		num++;
 	}
 	this.now.name = newName;
-	group.addUser(this.user.clientId);
 	
-	group.now.updateUserList(newName);
+	var date=curDate();
+
+	group.now.announceUser(newName, date);
+	group.addUser(this.user.clientId);
 	//everyone.now.updateUserList(newName);
-	for (var i = 0; i < names.length; i++) {
-		this.now.updateUserList(names[i]);
-	}
+	//for (var i = 0; i < names.length; i++) {
+		this.now.listAllUsers(names);
+	//}
 	
 	names.push(newName);
 	
 	//Send user some chat history
 	this.now.receiveHistory(log);
+	
+
+	log.push({"date":date, "name":this.now.name, "message":"", "type":"connect"});
 });
  
 nowjs.on('disconnect', function(){
+	var date=curDate();
+		
 	var index = groups[this.now.group].names.indexOf(this.now.name);
 	groups[this.now.group].names.splice(index, 1);
-	groups[this.now.group].group.now.removeUser(this.now.name); 
+	groups[this.now.group].group.now.removeUser(this.now.name, date);
+	
+	groups[this.now.group].log.push({"date":date, "name":this.now.name, "message":"", "type":"disconnect"});
 });
 
 function curDate(){
