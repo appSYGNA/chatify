@@ -7,7 +7,8 @@
 
 <script>
 $(document).ready(function(){
-
+	var scroll = 2000;
+	
 	get = getUrlVars();
 	if(get["name"]!=null) now.name = get["name"];
 	else now.name = prompt("What's your name?", "");
@@ -19,7 +20,7 @@ $(document).ready(function(){
   	if(name==now.name) color = "#0000FF";
   	else color = "#900000";
     $("#messages").append("<br>" + date + " " + "<font color='"+color+"'>"+name + "</font>: " + message);
-    $('#messages').scrollTop(200);
+    $('#messages').scrollTop(scroll);
   }
   
   now.receiveHistory = function(history){
@@ -37,7 +38,7 @@ $(document).ready(function(){
 		}
   	});
   	$("#messages").append("<br>" + "<font color='#00FF00'>You have joined the chat.</font>");
-  	$('#messages').scrollTop(200);
+  	$('#messages').scrollTop(scroll);
   }
   
   now.listAllUsers = function(names) {
@@ -53,13 +54,13 @@ $(document).ready(function(){
   now.announceUser = function(name, date) {
   		now.updateUserList(name);
 		$("#messages").append("<br>" + date + " <font color='#00FF00'>"+name+" has joined the chat.</font>");
-	    $('#messages').scrollTop(200);
+	    $('#messages').scrollTop(scroll);
   }
   
   now.removeUser = function(name, date){
 	  $("#"+name).remove();
 	  $("#messages").append("<br>" + date + " <font color='#900000'>"+name+" has left the chat.</font>");
-	  $('#messages').scrollTop(200);
+	  $('#messages').scrollTop(scroll);
   }
   
   now.changeName = function(name) {
@@ -84,7 +85,7 @@ $(document).ready(function(){
 	
 	now.core.on('disconnect', function(){
 		$("#messages").append("<br>" + "<font color='#900000'>You have been disconnected.</font>");
-    	$('#messages').scrollTop(200);
+    	$('#messages').scrollTop(scroll);
     	$("#users").empty();
 	});
 	
