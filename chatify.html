@@ -15,10 +15,6 @@ $(document).ready(function(){
 	if(get["group"]!=null) now.group = get["group"];
 	else now.group = 0;
 		
-	if(now.group>2)
-		$("#logo").attr('src', "https://s3.amazonaws.com/nocsavedlogos/"+now.group+".png");
-	else $("#logo").attr('src', "http://nocapp-dev.elasticbeanstalk.com/addons/shared_addons/themes/broadcasterwl/img/appsygna.png");
-
   now.receiveMessage = function(name, date, message){
   	if(name==now.name) color = "#0000FF";
   	else color = "#900000";
@@ -110,7 +106,6 @@ function getUrlVars()
 </head>
 
 <body>
-	<img id="logo"></img>
 	<table border=1px style="width:500px; max-height:50px;">
 		<tr>
 			<td style="width:80%; "><div id="messages" style="max-height:200px; min-height:200px; max-width:400px; overflow:auto; overflow-x:hidden;"></div></td>
